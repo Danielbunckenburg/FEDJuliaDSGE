@@ -20,7 +20,14 @@ def run_experiments():
     table_data = []
     for p_name in key_params:
         p = m.parameters[p_name]
-        table_data.append([p_name, p.tex_label or p_name, f"{p.value:.4f}", p.description or ""])
+        symbol = p.tex_label or p_name
+        # Ensure it is wrapped in math mode if it looks like a latex command
+        if "\\" in symbol or "_" in symbol:
+            symbol = f"${symbol}$"
+        
+        # Escape underscore in parameter names for latex
+        display_name = p_name.replace("_", "\\_")
+        table_data.append([display_name, symbol, f"{p.value:.4f}", p.description or ""])
     
     df_params = pd.DataFrame(table_data, columns=["Name", "Symbol", "Value", "Description"])
     latex_table = df_params.to_latex(index=False, escape=False, caption="Model Parameters", label="tab:params")

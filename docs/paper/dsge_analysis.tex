@@ -23,18 +23,52 @@ This paper investigates the dynamic properties of a medium-scale New Keynesian D
 Modern macroeconomics relies heavily on Dynamic Stochastic General Equilibrium (DSGE) models for policy analysis and forecasting. This study focuses on the M1002 model, which incorporates several frictions, including price and wage stickiness, habit formation, and financial frictions.
 
 \section{The Model}
-The model is a medium-scale New Keynesian framework. Key structural parameters are summarized in Table \ref{tab:params}.
+The model is a medium-scale New Keynesian framework with several nominal and real rigidities. Key structural parameters are summarized in Table \ref{tab:params}.
 
 \begin{center}
 \input{../../outputs/tables/params.tex}
 \end{center}
 
-Key components include:
+\subsection{Key Equilibrium Equations}
+The dynamics of the economy are governed by a system of linearized stochastic difference equations. Some of the most critical equations include:
+
 \begin{itemize}
-    \item \textbf{Taylor Rule:} The central bank adjusts the nominal interest rate $R_t$ in response to inflation $\pi_t$ and output growth $y_t$.
-    \[ R_t = \rho_R R_{t-1} + (1-\rho_R)[\psi_1 (\pi_t - \pi_*) + \psi_2 (y_t - y_f,t)] + \dots \]
-    \item \textbf{Phillips Curve:} Prices are set by firms in a monopolistically competitive market with Calvo-style indexation ($\zeta_p$).
+    \item \textbf{Consumption Euler Equation:}
+    Deriving from the household's optimization problem with habit formation $h$:
+    \[ c_t = \frac{h/e^{z^*}}{1+h/e^{z^*}} c_{t-1} + \frac{1}{1+h/e^{z^*}} E_t[c_{t+1}] - \frac{1-h/e^{z^*}}{\sigma_c(1+h/e^{z^*})} (R_t - E_t[\pi_{t+1}] + E_t[z_{t+1}]) \]
+    where $z_t$ is the technology growth rate and $\sigma_c$ governs the intertemporal elasticity of substitution.
+
+    \item \textbf{New Keynesian Phillips Curve (NKPC):}
+    Inflation $\pi_t$ depends on future expected inflation, past inflation (via indexation $\iota_p$), and marginal cost $mc_t$:
+    \[ \pi_t = \frac{\iota_p}{1+\beta \iota_p} \pi_{t-1} + \frac{\beta}{1+\beta \iota_p} E_t[\pi_{t+1}] + \kappa mc_t + \lambda_{f,t} \]
+    where $\kappa$ is a function of the Calvo price stickiness parameter $\zeta_p$.
+
+    \item \textbf{Taylor Rule:} 
+    The central bank follows a smoothed interest rate rule:
+    \[ R_t = \rho R_{t-1} + (1-\rho)[\psi_1 (\pi_t - \pi^*) + \psi_2 (y_t - y_t^f)] + \psi_3 \Delta y_t + r_{m,t} \]
+    where $y_t^f$ is the level of output that would prevail under flexible prices.
+
+    \item \textbf{Resource Constraint:}
+    Output is split between consumption, investment, and government spending:
+    \[ y_t = \frac{c^*}{y^*} c_t + \frac{i^*}{y^*} i_t + g_t + \dots \]
 \end{itemize}
+
+\subsection{Data and Identification}
+The model is designed to be estimated using live macroeconomic data from the Federal Reserve Economic Data (FRED) database. We utilize 13 key observables:
+\begin{enumerate}
+    \item \textbf{Output Growth}: Real GDP per capita growth (GDP, CNP16OV).
+    \item \textbf{Inflation}: GDP Deflator (GDPDEF) and Core PCE (PCEPILFE).
+    \item \textbf{Interest Rates}: Effective Federal Funds Rate (DFF).
+    \item \textbf{Labor Market}: Average weekly hours and compensation (AWHNONAG, COMPNFB).
+    \item \textbf{Financial Spreads}: BAA-10Y Treasury spread.
+\end{enumerate}
+
+Raw data is transformed from levels to log-deviations or growth rates to match the model's stationary states. 
+
+\subsection{Calibration and Methodology}
+The model parameters are calibrated or estimated using a Bayesian approach. Parameters like the depreciation rate ($\delta = 0.025$) and the steady-state capital share ($\alpha = 0.3$) are often fixed to standard values, while others like price stickiness ($\zeta_p$) and Taylor rule coefficients ($\psi_i$) are estimated by maximizing the posterior density:
+\[ \mathcal{P}(\theta | Y) \propto \mathcal{L}(Y | \theta) \pi(\theta) \]
+where $\mathcal{L}(Y | \theta)$ is the likelihood computed via the Kalman Filter and $\pi(\theta)$ represents the prior distributions.
 
 \section{Experiments and Results}
 
