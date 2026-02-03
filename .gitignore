@@ -24,3 +24,6 @@ data/data_sample.csv
 # IDEs
 .vscode/
 .idea/
+
+# Credentials
+.env
