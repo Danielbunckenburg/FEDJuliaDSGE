@@ -1,0 +1,79 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Analysis of the US Macroeconomic Dynamics: \\ A DSGE Model Perspective}
+\author{Antigravity \& Daniel}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This paper investigates the dynamic properties of a medium-scale New Keynesian DSGE model (M1002). We perform several experiments, including Impulse Response Function (IRF) analysis for monetary and technology shocks, and sensitivity tests on key structural parameters. Our results highlight the importance of the Taylor rule's aggressiveness and price stickiness in shaping the transmission of shocks to the real economy.
+\end{abstract}
+
+\section{Introduction}
+Modern macroeconomics relies heavily on Dynamic Stochastic General Equilibrium (DSGE) models for policy analysis and forecasting. This study focuses on the M1002 model, which incorporates several frictions, including price and wage stickiness, habit formation, and financial frictions.
+
+\section{The Model}
+The model is a medium-scale New Keynesian framework. Key components include:
+\begin{itemize}
+    \item \textbf{Taylor Rule:} The central bank adjusts the nominal interest rate $R_t$ in response to inflation $\pi_t$ and output growth $y_t$.
+    \[ R_t = \rho_R R_{t-1} + (1-\rho_R)[\psi_1 (\pi_t - \pi_*) + \psi_2 (y_t - y_f,t)] + \dots \]
+    \item \textbf{Phillips Curve:} Prices are set by firms in a monopolistically competitive market with Calvo-style indexation.
+\end{itemize}
+
+\section{Experiments and Results}
+
+\subsection{Baseline Impulse Responses}
+We analyze how the economy reacts to exogenous shocks. Figure \ref{fig:irf_monetary} shows the impact of a contractionary monetary policy shock. As expected, a surprise rate hike leads to a temporary decline in GDP and inflation.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{outputs/plots/irf_rm_sh.png}
+    \caption{IRFs - Monetary Policy Shock}
+    \label{fig:irf_monetary}
+\end{figure}
+
+Figure \ref{fig:irf_tech} displays the response to a neutral technology shock. A boost in productivity increases output while putting downward pressure on inflation, allowing for a lower interest rate path.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{outputs/plots/irf_ztil_sh.png}
+    \caption{IRFs - Technology Shock}
+    \label{fig:irf_tech}
+\end{figure}
+
+\subsection{Sensitivity Analysis}
+
+\subsubsection{Monetary Policy Aggressiveness}
+We vary the inflation response coefficient ($\psi_1$) in the Taylor rule. Figure \ref{fig:sens_psi1} compares the outcomes for $\psi_1 = 1.5$ (baseline) and $\psi_1 = 2.5$ (aggressive). An aggressive central bank stabilizes inflation more quickly but at the cost of larger initial volatility in the interest rate.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{outputs/plots/sensitivity_psi1.png}
+    \caption{Sensitivity to Taylor Rule $\psi_1$}
+    \label{fig:sens_psi1}
+\end{figure}
+
+\subsubsection{Price Stickiness}
+We examine the effect of the Calvo parameter ($\zeta_p$). Figure \ref{fig:sens_zeta_p} shows that higher price stickiness ($\zeta_p = 0.8$) results in a more sluggish adjustment of inflation and broader output fluctuations compared to a more flexible environment ($\zeta_p = 0.5$).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{outputs/plots/sensitivity_zeta_p.png}
+    \caption{Sensitivity to Price Stickiness $\zeta_p$}
+    \label{fig:sens_zeta_p}
+\end{figure}
+
+\section{Conclusion}
+The M1002 model provides a robust framework for understanding macroeconomic fluctuations. Our experiments underscore that the effectiveness of monetary policy and the inherent rigidities in price setting are critical determinants of economic stability.
+
+\end{document}

@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.dll
+.venv/
+env/
+build/
+dist/
+
+# Outputs
+outputs/logs/
+outputs/results/
+outputs/figures/
+!outputs/logs/.gitkeep
+!outputs/results/.gitkeep
+!outputs/figures/.gitkeep
+
+# Data
+data/fred_observables.csv
+data/data_sample.csv
+
+# IDEs
+.vscode/
+.idea/
