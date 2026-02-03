@@ -29,29 +29,35 @@ The model is a medium-scale New Keynesian framework with several nominal and rea
 \input{../../outputs/tables/params.tex}
 \end{center}
 
-\subsection{Key Equilibrium Equations}
-The dynamics of the economy are governed by a system of linearized stochastic difference equations. Some of the most critical equations include:
+\subsection{Economic Agents and Frictions}
+The M1002 model is a medium-scale DSGE framework that extends the standard New Keynesian model with several "real" and "nominal" frictions to better match the persistence found in macroeconomic data.
 
+\subsubsection{Households}
+Households maximize an intertemporal utility function. Two key features distinguish their behavior:
 \begin{itemize}
-    \item \textbf{Consumption Euler Equation:}
-    Deriving from the household's optimization problem with habit formation $h$:
-    \[ c_t = \frac{h/e^{z^*}}{1+h/e^{z^*}} c_{t-1} + \frac{1}{1+h/e^{z^*}} E_t[c_{t+1}] - \frac{1-h/e^{z^*}}{\sigma_c(1+h/e^{z^*})} (R_t - E_t[\pi_{t+1}] + E_t[z_{t+1}]) \]
-    where $z_t$ is the technology growth rate and $\sigma_c$ governs the intertemporal elasticity of substitution.
-
-    \item \textbf{New Keynesian Phillips Curve (NKPC):}
-    Inflation $\pi_t$ depends on future expected inflation, past inflation (via indexation $\iota_p$), and marginal cost $mc_t$:
-    \[ \pi_t = \frac{\iota_p}{1+\beta \iota_p} \pi_{t-1} + \frac{\beta}{1+\beta \iota_p} E_t[\pi_{t+1}] + \kappa mc_t + \lambda_{f,t} \]
-    where $\kappa$ is a function of the Calvo price stickiness parameter $\zeta_p$.
-
-    \item \textbf{Taylor Rule:} 
-    The central bank follows a smoothed interest rate rule:
-    \[ R_t = \rho R_{t-1} + (1-\rho)[\psi_1 (\pi_t - \pi^*) + \psi_2 (y_t - y_t^f)] + \psi_3 \Delta y_t + r_{m,t} \]
-    where $y_t^f$ is the level of output that would prevail under flexible prices.
-
-    \item \textbf{Resource Constraint:}
-    Output is split between consumption, investment, and government spending:
-    \[ y_t = \frac{c^*}{y^*} c_t + \frac{i^*}{y^*} i_t + g_t + \dots \]
+    \item \textbf{Habit Formation ($h$):} Consumption decisions are persistent. Current utility depends not just on current consumption $c_t$, but on consumption relative to a fraction $h$ of past consumption $c_{t-1}$. This generates the smooth "hump-shaped" response of consumption seen in IRFs.
+    \item \textbf{Wage Stickiness ($\zeta_w$):} Households provide differentiated labor services. Following the Calvo (1983) framework, they can only re-optimize their nominal wage with a probability $1-\zeta_w$ each period. This prevents wages from adjusting instantly to labor market conditions, introducing "sticky wages."
 \end{itemize}
+
+\subsubsection{Firms and Production}
+The production sector is divided into final-goods firms (perfectly competitive) and intermediate-goods firms (monopolistically competitive):
+\begin{itemize}
+    \item \textbf{Production Function:} Firms use a Cobb-Douglas technology: $y_t = k_t^\alpha (e^{z_t} L_t)^{1-\alpha} - \Phi$, where $\alpha$ is the capital share and $\Phi$ represents fixed costs.
+    \item \textbf{Price Stickiness ($\zeta_p$):} Similar to wages, intermediate firms face Calvo pricing frictions. A fraction $\zeta_p$ of firms keep their prices unchanged (or indexed to past inflation $\iota_p$), leading to a slow adjustment of the aggregate price level—the core of the New Keynesian Phillips Curve.
+\end{itemize}
+
+\subsubsection{Investment and Capital}
+The model incorporates **Investment Adjustment Costs ($S''$)** and **Variable Capital Utilization ($\psi$)**. These features ensure that the shadow price of capital ($q_t$) and the investment rate ($i_t$) do not jump erratically, but rather follow smooth paths consistent with historical investment data.
+
+\subsubsection{Financial Frictions (The BGG Framework)}
+A distinguishing feature of the M1002 model relative to simpler versions (like Smets-Wouters) is the inclusion of a **Financial Accelerator** based on Bernanke, Gertler, and Gilchrist (1999).
+\begin{itemize}
+    \item \textbf{Entrepreneurs:} They borrow from financial intermediaries to purchase capital. However, because of asymmetric information and "costly state verification," they face an external finance premium (spread) over the risk-free rate.
+    \item \textbf{The Spread:} The spread depends inversely on the entrepreneur's net worth. In a downturn, asset prices ($q_t$) fall, reducing net worth, which hikes the borrowing cost and further depresses investment—a feedback loop known as the "Financial Accelerator."
+\end{itemize}
+
+\subsubsection{The Central Bank}
+The monetary authority follows a **Taylor Rule** with interest rate smoothing ($\rho$). It reacts to deviations of inflation from the target ($\pi^*$) and to the "output gap"—the difference between actual output and the level of output that would exist if all prices and wages were flexible ($y_t - y_t^f$). 
 
 \subsection{Data and Identification}
 The model is designed to be estimated using live macroeconomic data from the Federal Reserve Economic Data (FRED) database. We utilize 13 key observables:
